@@ -15,16 +15,12 @@
 #define E2FSTOOL_VERSION "1.0.0"
 #define E2FSTOOL_DATE "30-Mar-2023"
 
-#ifdef HAVE_LIB_NT_H
-#include "libnt.h"
-#else
-#ifdef SVB_WIN32
-#include "windows.h"
-#define symlink(t, f) xsymlink(t, f)
-#endif
+#if defined(__CYGWIN__) || defined(_WIN32)
+#include <windows.h>
+#define symlink xsymlink
 #endif
 
-#ifdef SVB_MINGW
+#ifdef __MINGW32__
 #define mkdir(p, m) mkdir(p)
 #endif
 
@@ -50,7 +46,7 @@ struct inode_params {
     errcode_t error;
 };
 
-#if defined(SVB_WIN32) && !defined(HAVE_LIB_NT_H)
+#if defined(__CYGWIN__) || defined(_WIN32)
 static int xsymlink(char *target, const char *file)
 {
     int sz = -1;
