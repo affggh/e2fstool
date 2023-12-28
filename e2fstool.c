@@ -137,10 +137,10 @@ errcode_t ino_get_config(ext2_ino_t ino, struct ext2_inode inode, char *path, vo
 
     if (ctx) {
         if (ino == EXT2_ROOT_INO) {
-            path[0] ? fprintf(contexts, "(/.*)? %.*s\n", ctx_len, ctx)
-                    : fprintf(contexts, "/%s(/.*)? %.*s\n", path, ctx_len, ctx);
+            path[0] ? fprintf(contexts, "(/.*)? %.*s\n", (int)ctx_len, ctx)
+                    : fprintf(contexts, "/%s(/.*)? %.*s\n", path, (int)ctx_len, ctx);
         } else {
-            fprintf(contexts, "/%s %.*s\n", path, ctx_len, ctx);
+            fprintf(contexts, "/%s %.*s\n", path, (int)ctx_len, ctx);
         }
     }
 
